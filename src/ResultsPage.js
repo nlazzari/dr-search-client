@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import BackgroundImage from './img/medicalFiles.jpg';
 import fetchData from './fetch.js';
 import ResultsContainer from './ResultsContainer';
+import ResultsPagination from './ResultsPagination';
+import {browserHistory} from 'react-router'
 
 const styles = {
   width: '100vw',
@@ -13,11 +15,11 @@ const styles = {
                     ` rgba(92,225,255,0.5)), url(${BackgroundImage})`,
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-start',
+  justifyContent: 'center',
   alignItems: 'center',
   heading: {
     textAlign: '',
-    fontSize: '1.6em',
+    fontSize: '2em',
     marginBottom: '5vh'
   },
   wrapper: {
@@ -27,7 +29,11 @@ const styles = {
     alignItems: 'center',
     color: 'white',
     marginTop: '3vh',
-    padding: '20px'
+    padding: '20px',
+    backgroundColor: 'rgba(80, 100, 100, 0.2)',
+    // minWidth: '50vw',
+    // maxWidth: '90vw',
+    borderRadius: '20px'
   }
 };
 
@@ -45,7 +51,16 @@ export default class ResultsPage extends Component {
       resultsCount: 0,
       doctors: []
     }
-    // this.someMethod = this.someMethod.bind(this);
+    this.handlePaginationClick = this.handlePaginationClick.bind(this);
+  }
+
+  handlePaginationClick(event) {
+    // event.preventDefault();
+    // const href = event.target.getAttribute('href');
+    // console.log(event.target.getAttribute('href'));
+    // browserHistory.push(href);
+    // this.componentDidMount();
+    // this.render()
   }
 
   componentDidMount() {
@@ -71,7 +86,6 @@ export default class ResultsPage extends Component {
     .then(newState => {
         console.log('New State', newState);
 
-        console.log(styles.height);
     })
     .catch(function(err) {
     	console.log("oops!", err);
@@ -83,16 +97,29 @@ export default class ResultsPage extends Component {
       <div className="" style={styles}>
 
         <div style={styles.wrapper} className="container">
-          <h1 style={styles.heading} >Results</h1>
+          <div >
+            <h1 style={styles.heading} >Results</h1>
+            <div onClick={this.handlePaginationClick}>
+              <ResultsPagination size="sm"
+                    query={this.props.location.query}
+                    pageCount={this.state.pageCount}
+              />
+            </div>
 
-          <ul className="container">
+          </div>
+
             <ResultsContainer
               resultsCount={this.state.resultsCount}
               doctors={this.state.doctors} pageCount={this.state.pageCount}
               page={this.state.page}
             />
+            <div onClick={this.handlePaginationClick}>
+              <ResultsPagination size="sm"
+                    query={this.props.location.query}
+                    pageCount={this.state.pageCount}
+              />
+            </div>
 
-          </ul>
         </div>
 
 

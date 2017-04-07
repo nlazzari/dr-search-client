@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import ResultsCard from './ResultsCard';
 
 const styles = {
-
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 };
 
 
@@ -24,9 +27,9 @@ export default class ResultsContainer extends Component {
   render () {
     const cards = [];
 
-    this.props.doctors.forEach(doctor => {
+    this.props.doctors.forEach((doctor,i,arr) => {
       cards.push(
-        <ResultsCard doctor={doctor} />
+        <ResultsCard key={i} doctor={doctor} />
       );
     })
 
