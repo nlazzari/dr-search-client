@@ -50,6 +50,16 @@ function createAddressString(contact) {
   return [street, `${contact.city}, ${contact.postalCode}`].join('\n');
 }
 
+function createMappableAddressLink(addressString) {
+  const addressCsv = addressString.split('\n').join(',');
+  return `http://maps.google.com/?q=${addressCsv}`;
+}
+
+function createAnchor(child, href) {
+  return (<a href={href} target="_blank"
+            style={{color: 'black'}}>{child}</a>);
+}
+
 function createAddressDivs(address) {
   const arr = address.split('\n');
   let divs = [];
@@ -85,7 +95,7 @@ function createAddressSubtitles(contacts) {
 function createPhoneString(contact) {
   const p = contact.phoneNumber;
 
-  return `${p.slice(0,3)} ${p.slice(3,6)} ${p.slice(6)}`;
+  return `(${p.slice(0,3)}) ${p.slice(3,6)} ${p.slice(6)}`;
 }
 
 
@@ -127,7 +137,7 @@ export default class ResultsCard extends Component {
                         : '';
 
     const starRatingTag = this.props.doctor.rateMyMDRating[0]
-                          ?  <a href={reviewLink}
+                          ?  <a href={reviewLink} target="_blank"
                               style={{color: 'black', textDecoration: 'none'}}>
                                   {StarIcon}{starRating}
                               </a>
@@ -143,6 +153,13 @@ export default class ResultsCard extends Component {
     const addressText2 = this.props.doctor.contactInfo[1] ?
                           createAddressString(this.props.doctor.contactInfo[1])
                         :  '';
+    const mapUrl1 = createMappableAddressLink(addressText1);
+    const mapUrl2 = this.props.doctor.contactInfo[1] ?
+                          createMappableAddressLink(addressText2)
+                        :  '';
+    // const
+
+
     const phoneText1 = createPhoneString(this.props.doctor.contactInfo[0]);
     const phoneText2 = this.props.doctor.contactInfo[1] ?
                           createPhoneString(this.props.doctor.contactInfo[1])
@@ -160,11 +177,15 @@ export default class ResultsCard extends Component {
           </CardSubtitle>
           <CardText style={{display: 'flex', justifyContent: 'space-around'}}>
             <span>
-              {createAddressDivs(addressText1)}
+                { createAnchor( createAddressDivs(addressText1),
+                                mapUrl1  )
+                }
               <div>{phoneText1}</div>
             </span>
             <span>
-              {createAddressDivs(addressText2)}
+              { createAnchor( createAddressDivs(addressText2),
+                              mapUrl2  )
+              }
               <div>{phoneText2}</div>
             </span>
           </CardText>
