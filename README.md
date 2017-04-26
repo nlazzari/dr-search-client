@@ -21,6 +21,7 @@ Doctors with a star-rating on RateMDs will appear at the top of the results in d
  - [reactstrap](https://reactstrap.github.io/) - React component library based on Bootstrap 4
  - [react-router](https://github.com/ReactTraining/react-router) - React Router v3
  - [react-fontawesome](https://github.com/danawoodman/react-fontawesome) - Font Awesome component library for React
+ - [medical icons](https://thenounproject.com/milindacourey10/collection/medical/) - set of free medical themed icons 
 
 ## Installation
  Start the dr-search service first, then run the commands
@@ -33,7 +34,7 @@ $ yarn install
 $ npm install
 ```
 
-to install all depencies. When finished, run the commands
+to install all dependencies. When finished, run the commands
 
 ```
 $ yarn start
@@ -44,8 +45,3 @@ $ npm start
 ```
 
 to run the client.
-
-
-
-
- 
